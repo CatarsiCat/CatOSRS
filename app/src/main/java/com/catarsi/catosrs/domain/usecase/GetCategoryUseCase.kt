@@ -1,12 +1,13 @@
 package com.catarsi.catosrs.domain.usecase
 
+import com.catarsi.catosrs.domain.model.Category
 import com.catarsi.catosrs.domain.model.CategoryBase
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
 import com.catarsi.catosrs.domain.usecase.base.SingleUseCase
 import io.reactivex.Single
 import javax.inject.Inject
 
-class GetCategoryUseCase @Inject constructor(private val repository: CatalogueRepository) : SingleUseCase<CategoryBase>() {
+class GetCategoryUseCase @Inject constructor(private val repository: CatalogueRepository) : SingleUseCase<List<Category>>() {
 
     private var categoryId: Int? = null
 
@@ -14,8 +15,8 @@ class GetCategoryUseCase @Inject constructor(private val repository: CatalogueRe
         categoryId = id
     }
 
-    override fun buildUseCaseSingle(): Single<CategoryBase> {
-        return repository.getCategory(categoryId)
+    override fun buildUseCaseSingle(): Single<List<Category>> {
+        return repository.getCategory(categoryId).map { it.alpha }
     }
 
 }

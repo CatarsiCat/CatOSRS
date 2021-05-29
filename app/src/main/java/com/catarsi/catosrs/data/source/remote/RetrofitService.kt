@@ -16,5 +16,8 @@ interface RetrofitService {
     fun getCategoryObservable(@Query("category") id: Long): Observable<CategoryBase>
 
     @GET("m=itemdb_rs/api/catalogue/items.json")
-    fun getItems(@Query("category") id: Long, @Query("alpha") alpha: String, @Query("page") page: Int): Single<ItemBase>
+    fun getItems(@Query("category") id: Int, @Query("alpha") alpha: String, @Query("page") page: Int): Single<ItemBase>
+
+    @GET("m=itemdb_rs/api/catalogue/items.json")
+    fun getItemsObservable(@Query("category") id: Int, @Query("alpha") alpha: String, @Query("page") page: Int): Observable<ItemBase>
 }

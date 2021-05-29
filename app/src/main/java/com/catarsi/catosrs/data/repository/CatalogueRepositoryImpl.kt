@@ -3,6 +3,7 @@ package com.catarsi.catosrs.data.repository
 import com.catarsi.catosrs.data.source.remote.RetrofitService
 import com.catarsi.catosrs.domain.model.Category
 import com.catarsi.catosrs.domain.model.CategoryBase
+import com.catarsi.catosrs.domain.model.Item
 import com.catarsi.catosrs.domain.model.ItemBase
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
 import io.reactivex.Observable
@@ -17,8 +18,12 @@ class CatalogueRepositoryImpl(private val retrofitService: RetrofitService) : Ca
         return retrofitService.getCategoryObservable(categoryId!!)
     }
 
-    override fun getItems(categoryId: Long?, alpha: String?, page: Int?): Single<ItemBase> {
+    override fun getItems(categoryId: Int?, alpha: String?, page: Int?): Single<ItemBase> {
         return retrofitService.getItems(categoryId!!, alpha!!, page!!)
+    }
+
+    override fun getItemsObservable(categoryId: Int?, alpha: String?, page: Int?): Observable<ItemBase> {
+        return retrofitService.getItemsObservable(categoryId!!, alpha!!, page!!)
     }
 
     override fun getCategoryList(categoriesData: List<CategoryBase>): Single<List<Category>> {
@@ -28,6 +33,16 @@ class CatalogueRepositoryImpl(private val retrofitService: RetrofitService) : Ca
                 categoryList.addAll(categoryBase.alpha)
             }
             Single.just(categoryList)
+        }
+    }
+
+    override fun getItemsList(results: List<ItemBase>): Single<List<Item>> {
+        val itemList = mutableListOf<Item>()
+        return Single.defer {
+            for(itemBase in results){
+                itemList.addAll(itemBase.items)
+            }
+            Single.just(itemList)
         }
     }
 

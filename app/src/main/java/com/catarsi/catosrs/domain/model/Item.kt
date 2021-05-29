@@ -8,8 +8,8 @@ data class Item (
         var typeIcon: String,
         var name: String,
         var description: String,
-        var current: List<ItemTrend>,
-        var today: List<ItemTrend>,
+        var current: ItemTrend,
+        var today: ItemTrend,
         var trend: String,
         var price: String,
         var member: Boolean
