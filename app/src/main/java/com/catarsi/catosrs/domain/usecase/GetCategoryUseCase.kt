@@ -1,6 +1,5 @@
 package com.catarsi.catosrs.domain.usecase
 
-import com.catarsi.catosrs.domain.model.Category
 import com.catarsi.catosrs.domain.model.CategoryBase
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
 import com.catarsi.catosrs.domain.usecase.base.SingleUseCase
