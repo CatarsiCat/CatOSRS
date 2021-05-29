@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class GetCategoryUseCase @Inject constructor(private val repository: CatalogueRepository) : SingleUseCase<CategoryBase>() {
 
-    private var categoryId: Long? = null
+    private var categoryId: Int? = null
 
-    fun setCategoryId(id: Long){
+    fun setCategoryId(id: Int){
         categoryId = id
     }
 

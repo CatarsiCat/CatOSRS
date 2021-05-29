@@ -9,7 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 class CatalogueRepositoryImpl(private val retrofitService: RetrofitService) : CatalogueRepository {
-    override fun getCategory(categoryId: Long?): Single<CategoryBase> {
+    override fun getCategory(categoryId: Int?): Single<CategoryBase> {
         return retrofitService.getCategory(categoryId!!)
     }
 

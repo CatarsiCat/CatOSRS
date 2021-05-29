@@ -11,10 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getCategoryUseCase: GetCategoryUseCase, private val getAllCategoriesUseCase: GetAllCategoriesUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(private val getAllCategoriesUseCase: GetAllCategoriesUseCase) : ViewModel() {
 
     private val TAG = HomeViewModel::class.java.simpleName
-    val categoryData = MutableLiveData<CategoryBase>()
     val categoryList: MutableList<CategoryEntity> = mutableListOf()
 
 
@@ -27,16 +26,6 @@ class HomeViewModel @Inject constructor(private val getCategoryUseCase: GetCateg
     }
 
     fun loadCategory() {
-        getCategoryUseCase.setCategoryId(9)
-        getCategoryUseCase.execute(
-                onSuccess = {
-                    categoryData.value = it
-                },
-                onError = {
-                    it.printStackTrace()
-                }
-        )
-
         getAllCategoriesUseCase.execute(
                 onSuccess = {
                     println(it)

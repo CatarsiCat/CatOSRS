@@ -23,13 +23,14 @@ class ItemsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.category = args.category
+        viewModel.loadCategory()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.items_fragment, container, false)
         fragmentBinding.itemsViewModel = viewModel
-        viewModel.category = args.category
         (activity as AppCompatActivity).supportActionBar?.title = viewModel.category.name
         fragmentBinding.initText.text = viewModel.category.name
 

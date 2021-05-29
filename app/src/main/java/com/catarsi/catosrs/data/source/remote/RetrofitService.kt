@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface RetrofitService {
 
     @GET("m=itemdb_rs/api/catalogue/category.json")
-    fun getCategory(@Query("category") id: Long): Single<CategoryBase>
+    fun getCategory(@Query("category") id: Int): Single<CategoryBase>
 
     @GET("m=itemdb_rs/api/catalogue/category.json")
     fun getCategoryObservable(@Query("category") id: Long): Observable<CategoryBase>

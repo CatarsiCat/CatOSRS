@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface CatalogueRepository {
-    fun getCategory(categoryId: Long?): Single<CategoryBase>
+    fun getCategory(categoryId: Int?): Single<CategoryBase>
     fun getCategoryObservable(categoryId: Long?): Observable<CategoryBase>
     fun getItems(categoryId: Long?, alpha: String?, page: Int?): Single<ItemBase>
     fun getCategoryList(categoriesData: List<CategoryBase>): Single<List<Category>>
