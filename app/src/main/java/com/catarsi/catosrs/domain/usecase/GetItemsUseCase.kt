@@ -20,12 +20,20 @@ class GetItemsUseCase @Inject constructor(private val repository: CatalogueRepos
     override fun buildUseCaseSingle(): Single<List<Item>> {
         val requests = ArrayList< Observable <ItemBase>>()
         for(category in categoryData){
-            val numberOfPages: Int = (category.items / 12)
-            for(i in 0..numberOfPages){
-                if(category.letter == "#"){
-                    requests.add(repository.getItemsObservable(categoryEntity.id, "%23", i+1))
-                }else {
-                    requests.add(repository.getItemsObservable(categoryEntity.id, category.letter, i+1))
+            if(category.items > 0) {
+                val numberOfPages: Int = (category.items / 12)
+                for (i in 0..numberOfPages) {
+                    if (category.letter == "#") {
+                        requests.add(repository.getItemsObservable(categoryEntity.id, "%23", i + 1))
+                    } else {
+                        requests.add(
+                            repository.getItemsObservable(
+                                categoryEntity.id,
+                                category.letter,
+                                i + 1
+                            )
+                        )
+                    }
                 }
             }
         }

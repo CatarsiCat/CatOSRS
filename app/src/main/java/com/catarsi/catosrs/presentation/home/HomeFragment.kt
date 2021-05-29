@@ -34,17 +34,17 @@ class HomeFragment : Fragment() {
 
         val categories = viewModel.categoryList
         fragmentHomeBinding.rvCategory.layoutManager = LinearLayoutManager(context)
-        fragmentHomeBinding.rvCategory.adapter = object : RecyclerView.Adapter<ItemHolder>() {
+        fragmentHomeBinding.rvCategory.adapter = object : RecyclerView.Adapter<CategoryHolder>() {
 
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-                return ItemHolder(LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false))
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
+                return CategoryHolder(LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false))
             }
 
             override fun getItemCount(): Int {
                 return categories.size
             }
 
-            override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+            override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
                 val name = categories[position].name
                 holder.textField.text = name
                 holder.textField.setOnClickListener {
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
         return fragmentHomeBinding.root
     }
 
-    inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class CategoryHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textField: TextView = view.findViewById(android.R.id.text1) as TextView
     }
 

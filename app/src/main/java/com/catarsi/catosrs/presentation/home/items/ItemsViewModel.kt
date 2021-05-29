@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.catarsi.catosrs.domain.model.Category
 import com.catarsi.catosrs.domain.model.CategoryBase
 import com.catarsi.catosrs.domain.model.CategoryEntity
+import com.catarsi.catosrs.domain.model.Item
 import com.catarsi.catosrs.domain.usecase.GetCategoryUseCase
 import com.catarsi.catosrs.domain.usecase.GetItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class ItemsViewModel  @Inject constructor(private val getCategoryUseCase: GetCategoryUseCase, private val getItemsUseCase: GetItemsUseCase): ViewModel() {
     lateinit var category: CategoryEntity
     val categoryData = MutableLiveData<List<Category>>()
+    val items = MutableLiveData<List<Item>>()
 
     private val TAG = ItemsViewModel::class.java.simpleName
 
@@ -41,6 +43,7 @@ class ItemsViewModel  @Inject constructor(private val getCategoryUseCase: GetCat
 
         getItemsUseCase.execute(
             onSuccess = {
+                items.value = it
                 Log.d(TAG, it.toString())
             },
             onError = {
