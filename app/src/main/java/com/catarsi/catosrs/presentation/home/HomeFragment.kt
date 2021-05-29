@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
 import com.catarsi.catosrs.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,30 +30,33 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         fragmentHomeBinding.homeViewModel = viewModel
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            fragmentHomeBinding.textHome.text = it
-        })
+
+        val categories = viewModel.categoryList
+        fragmentHomeBinding.rvCategory.layoutManager = LinearLayoutManager(context)
+        fragmentHomeBinding.rvCategory.adapter = object : RecyclerView.Adapter<ItemHolder>() {
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+                return ItemHolder(LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false))
+            }
+
+            override fun getItemCount(): Int {
+                return categories.size
+            }
+
+            override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+                val name = categories[position].name
+                holder.textField.text = name
+                holder.textField.setOnClickListener {
+                    Toast.makeText(context, "Clicked $name ($position)", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         return fragmentHomeBinding.root
     }
 
-}
-/*
-class HomeFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var textField: TextView = view.findViewById(android.R.id.text1) as TextView
     }
-}*/
+
+}
