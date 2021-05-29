@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
@@ -47,6 +48,7 @@ class HomeFragment : Fragment() {
                 val name = categories[position].name
                 holder.textField.text = name
                 holder.textField.setOnClickListener {
+                    findNavController().navigate(HomeFragmentDirections.actionNavHomeToItemsFragment(categories[position]))
                     Toast.makeText(context, "Clicked $name ($position)", Toast.LENGTH_SHORT).show()
                 }
             }

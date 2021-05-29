@@ -1,3 +1,7 @@
 package com.catarsi.catosrs.domain.model
 
-data class CategoryEntity(var name: String, var id: Int)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class CategoryEntity(var name: String, var id: Int) : Parcelable
