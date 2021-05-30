@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
@@ -52,10 +53,13 @@ class ItemsFragment : Fragment() {
             items?.let {
                 this.items = it
                 fragmentBinding.rvItems.adapter!!.notifyDataSetChanged()
+                fragmentBinding.shimmerFrameLayout.visibility = View.GONE
+                fragmentBinding.rvItems.visibility = View.VISIBLE
             }
         })
 
         fragmentBinding.rvItems.layoutManager = LinearLayoutManager(context)
+        fragmentBinding.rvItems.addItemDecoration(DividerItemDecoration(context,LinearLayoutManager.VERTICAL))
         fragmentBinding.rvItems.adapter = object : RecyclerView.Adapter<ItemHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
                 return ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_holder, parent, false))
@@ -69,7 +73,7 @@ class ItemsFragment : Fragment() {
                 holder.pbIcon.visibility = View.VISIBLE
                 holder.icon.loadImage(item.icon_large, holder.pbIcon)
                 holder.itemView.setOnClickListener{
-                    Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Clicked on ${item.name}!", Toast.LENGTH_SHORT).show()
                 }
             }
 
