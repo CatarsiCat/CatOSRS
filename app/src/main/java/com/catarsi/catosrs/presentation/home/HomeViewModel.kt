@@ -1,11 +1,8 @@
 package com.catarsi.catosrs.presentation.home
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.catarsi.catosrs.domain.model.CategoryBase
-import com.catarsi.catosrs.domain.model.CategoryEntity
+import com.catarsi.catosrs.domain.entity.CategoryEntity
 import com.catarsi.catosrs.domain.usecase.GetAllCategoriesUseCase
-import com.catarsi.catosrs.domain.usecase.GetCategoryUseCase
 import com.catarsi.catosrs.util.Categories
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

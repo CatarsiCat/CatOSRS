@@ -1,4 +1,4 @@
-package com.catarsi.catosrs.domain.model
+package com.catarsi.catosrs.data.source.remote.model
 
 data class Item (
         var icon: String,

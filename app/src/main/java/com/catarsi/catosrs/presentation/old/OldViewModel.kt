@@ -12,7 +12,7 @@ class OldViewModel @Inject constructor(private val getLatestPricesUseCase: GetLa
     private val TAG = OldViewModel::class.java.simpleName
 
     fun loadRepo() {
-        /*
+
         getLatestPricesUseCase.execute(
             onSuccess = {
                 println(it)
@@ -21,6 +21,6 @@ class OldViewModel @Inject constructor(private val getLatestPricesUseCase: GetLa
                 it.printStackTrace()
             }
         )
-         */
+
     }
 }

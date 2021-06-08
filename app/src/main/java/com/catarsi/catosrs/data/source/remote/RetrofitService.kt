@@ -1,7 +1,7 @@
 package com.catarsi.catosrs.data.source.remote
 
-import com.catarsi.catosrs.domain.model.CategoryBase
-import com.catarsi.catosrs.domain.model.ItemBase
+import com.catarsi.catosrs.data.source.remote.model.CategoryBase
+import com.catarsi.catosrs.data.source.remote.model.ItemBase
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET

@@ -1,9 +1,9 @@
 package com.catarsi.catosrs.domain.usecase
 
-import com.catarsi.catosrs.domain.model.Category
-import com.catarsi.catosrs.domain.model.CategoryEntity
-import com.catarsi.catosrs.domain.model.Item
-import com.catarsi.catosrs.domain.model.ItemBase
+import com.catarsi.catosrs.data.source.remote.model.Category
+import com.catarsi.catosrs.domain.entity.CategoryEntity
+import com.catarsi.catosrs.data.source.remote.model.Item
+import com.catarsi.catosrs.data.source.remote.model.ItemBase
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
 import com.catarsi.catosrs.domain.usecase.base.SingleUseCase
 import io.reactivex.Observable

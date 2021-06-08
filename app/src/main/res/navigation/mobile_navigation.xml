@@ -33,6 +33,6 @@
         tools:layout="@layout/items_fragment">
         <argument
             android:name="category"
-            app:argType="com.catarsi.catosrs.domain.model.CategoryEntity" />
+            app:argType="com.catarsi.catosrs.domain.entity.CategoryEntity" />
     </fragment>
 </navigation>

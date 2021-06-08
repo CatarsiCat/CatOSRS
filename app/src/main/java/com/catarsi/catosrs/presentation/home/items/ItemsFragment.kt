@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
 import com.catarsi.catosrs.databinding.ItemsFragmentBinding
-import com.catarsi.catosrs.domain.model.Item
+import com.catarsi.catosrs.data.source.remote.model.Item
 import com.catarsi.catosrs.presentation.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 

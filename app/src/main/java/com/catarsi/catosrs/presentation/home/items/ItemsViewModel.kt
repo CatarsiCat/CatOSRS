@@ -3,10 +3,9 @@ package com.catarsi.catosrs.presentation.home.items
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.catarsi.catosrs.domain.model.Category
-import com.catarsi.catosrs.domain.model.CategoryBase
-import com.catarsi.catosrs.domain.model.CategoryEntity
-import com.catarsi.catosrs.domain.model.Item
+import com.catarsi.catosrs.data.source.remote.model.Category
+import com.catarsi.catosrs.domain.entity.CategoryEntity
+import com.catarsi.catosrs.data.source.remote.model.Item
 import com.catarsi.catosrs.domain.usecase.GetCategoryUseCase
 import com.catarsi.catosrs.domain.usecase.GetItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

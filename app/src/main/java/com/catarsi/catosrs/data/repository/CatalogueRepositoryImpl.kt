@@ -1,10 +1,10 @@
 package com.catarsi.catosrs.data.repository
 
 import com.catarsi.catosrs.data.source.remote.RetrofitService
-import com.catarsi.catosrs.domain.model.Category
-import com.catarsi.catosrs.domain.model.CategoryBase
-import com.catarsi.catosrs.domain.model.Item
-import com.catarsi.catosrs.domain.model.ItemBase
+import com.catarsi.catosrs.data.source.remote.model.Category
+import com.catarsi.catosrs.data.source.remote.model.CategoryBase
+import com.catarsi.catosrs.data.source.remote.model.Item
+import com.catarsi.catosrs.data.source.remote.model.ItemBase
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
 import io.reactivex.Observable
 import io.reactivex.Single
