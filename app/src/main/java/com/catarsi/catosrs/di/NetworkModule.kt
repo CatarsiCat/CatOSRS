@@ -4,8 +4,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import com.catarsi.catosrs.data.repository.CatalogueRepositoryImpl
+import com.catarsi.catosrs.data.repository.RealTimeRepositoryImpl
+import com.catarsi.catosrs.data.source.remote.RetrofitOldService
 import com.catarsi.catosrs.data.source.remote.RetrofitService
 import com.catarsi.catosrs.domain.repository.CatalogueRepository
+import com.catarsi.catosrs.domain.repository.RealTimeRepository
+import com.catarsi.catosrs.util.Constants.BASE_OLD_URL
 import com.catarsi.catosrs.util.Constants.BASE_URL
 import com.google.gson.Gson
 import dagger.Module
@@ -20,6 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -29,6 +34,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    @Named("new")
     fun providesRetrofit(
         gsonConverterFactory: GsonConverterFactory,
         rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
@@ -36,6 +42,22 @@ class NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(rxJava2CallAdapterFactory)
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("old")
+    fun providesOldRetrofit(
+        gsonConverterFactory: GsonConverterFactory,
+        rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_OLD_URL)
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .client(okHttpClient)
@@ -57,6 +79,12 @@ class NetworkModule {
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .addNetworkInterceptor(interceptor)
+            .addInterceptor { chain ->
+                chain.proceed(
+                    chain.request().newBuilder()
+                        .header("User-Agent", "volume_tracker - @Lioen#8375").build()
+                )
+            }
             .addInterceptor { chain ->
                 var request = chain.request()
                 /* If there is Internet, get the cache that was stored 5 seconds ago.
@@ -112,8 +140,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideService(retrofit: Retrofit): RetrofitService {
+    fun provideService(@Named("new") retrofit: Retrofit): RetrofitService {
         return retrofit.create(RetrofitService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOldService(@Named("old") retrofit: Retrofit): RetrofitOldService {
+        return retrofit.create(RetrofitOldService::class.java)
     }
 
     @Singleton
@@ -124,5 +158,12 @@ class NetworkModule {
         return CatalogueRepositoryImpl(retrofitService)
     }
 
+    @Singleton
+    @Provides
+    fun provideRealTimeRepository(
+        retrofitOldService: RetrofitOldService
+    ): RealTimeRepository {
+        return RealTimeRepositoryImpl(retrofitOldService)
+    }
 
 }

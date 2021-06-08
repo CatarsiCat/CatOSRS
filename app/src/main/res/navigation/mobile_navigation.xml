@@ -9,17 +9,17 @@
         android:id="@+id/nav_home"
         android:name="com.catarsi.catosrs.presentation.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_itemsFragment"
             app:destination="@id/itemsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.catarsi.catosrs.presentation.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_old"
+        android:name="com.catarsi.catosrs.presentation.old.OldFragment"
+        android:label="@string/menu_old"
+        tools:layout="@layout/fragment_old" />
 
     <fragment
         android:id="@+id/nav_slideshow"
