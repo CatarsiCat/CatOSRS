@@ -19,7 +19,11 @@
         android:id="@+id/nav_old"
         android:name="com.catarsi.catosrs.presentation.old.OldFragment"
         android:label="@string/menu_old"
-        tools:layout="@layout/fragment_old" />
+        tools:layout="@layout/fragment_old">
+        <action
+            android:id="@+id/action_nav_old_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -34,5 +38,13 @@
         <argument
             android:name="category"
             app:argType="com.catarsi.catosrs.domain.entity.CategoryEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailFragment"
+        android:name="com.catarsi.catosrs.presentation.old.itemdetail.ItemDetailFragment"
+        android:label="ItemDetailFragment">
+        <argument
+            android:name="oldItem"
+            app:argType="com.catarsi.catosrs.data.source.remote.model.OldItem" />
     </fragment>
 </navigation>

@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
 import com.catarsi.catosrs.data.source.remote.model.OldItem
 import com.catarsi.catosrs.databinding.FragmentOldBinding
 import com.catarsi.catosrs.presentation.old.adapter.OldItemsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class OldFragment : Fragment() {
@@ -48,7 +46,8 @@ class OldFragment : Fragment() {
     }
 
     private fun setupSearchBar() {
-        fragmentOldBinding.oldItemsSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        fragmentOldBinding.oldItemsSearch.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -65,6 +64,13 @@ class OldFragment : Fragment() {
         viewModel.listItem.observe(viewLifecycleOwner, { items ->
             items?.let {
                 adapter = OldItemsListAdapter(viewModel.listItem.value!! as ArrayList<OldItem>)
+                adapter.onItemClick = { oldItem ->
+                    findNavController().navigate(
+                        OldFragmentDirections.actionNavOldToItemDetailFragment(
+                            oldItem
+                        )
+                    )
+                }
                 fragmentOldBinding.rvOldItems.adapter = adapter
                 fragmentOldBinding.shimmerFrameLayout.visibility = View.GONE
                 fragmentOldBinding.rvOldItems.visibility = View.VISIBLE

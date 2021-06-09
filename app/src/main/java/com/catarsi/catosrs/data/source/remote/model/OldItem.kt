@@ -1,7 +1,11 @@
 package com.catarsi.catosrs.data.source.remote.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class OldItem(
-    var id: Int,
+    var id: Integer,
     var members: Boolean,
     var lowatclh: Int,
     var limit: Int,
@@ -9,4 +13,4 @@ data class OldItem(
     var highalch: Int,
     var icon: String,
     var name: String
-)
+) : Parcelable

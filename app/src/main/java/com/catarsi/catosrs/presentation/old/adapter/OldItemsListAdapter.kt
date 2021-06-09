@@ -16,6 +16,7 @@ class OldItemsListAdapter(private var oldItemList: ArrayList<OldItem>) :
     RecyclerView.Adapter<OldItemsListAdapter.OldItemHolder>(), Filterable {
 
     var oldItemFilterList = ArrayList<OldItem>()
+    var onItemClick: ((OldItem) -> Unit)? = null
 
     init {
         oldItemFilterList = oldItemList
@@ -67,11 +68,12 @@ class OldItemsListAdapter(private var oldItemList: ArrayList<OldItem>) :
         }
     }
 
-    class OldItemHolder(private val itemBinding: OldItemRowBinding) :
+    inner class OldItemHolder(private val itemBinding: OldItemRowBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(oldItem: OldItem) {
             itemBinding.oldItemText.text = oldItem.name
             itemBinding.root.setOnClickListener {
+                onItemClick?.invoke(oldItem)
                 Log.d("Selected:", oldItem.id.toString())
             }
         }
