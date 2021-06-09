@@ -25,7 +25,7 @@ class ItemDetailViewModel @Inject constructor(private val getTimeseriesUseCase: 
 
     fun getTimeseries() {
         getTimeseriesUseCase.id = oldItem.id
-        getTimeseriesUseCase.timestep = "5m"
+        getTimeseriesUseCase.timestep = "1h"
         getTimeseriesUseCase.execute(
             onSuccess = {
                 timeseries.value = it
