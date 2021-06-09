@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,14 +12,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.catarsi.catosrs.R
+import com.catarsi.catosrs.data.source.remote.model.OldItem
 import com.catarsi.catosrs.databinding.FragmentOldBinding
+import com.catarsi.catosrs.presentation.old.adapter.OldItemsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class OldFragment : Fragment() {
 
     private lateinit var fragmentOldBinding: FragmentOldBinding
     private val viewModel: OldViewModel by viewModels()
+    private lateinit var adapter: OldItemsListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +41,31 @@ class OldFragment : Fragment() {
         fragmentOldBinding.oldViewModel = viewModel
 
 
-        setupRecyclerView();
+        setupRecyclerView()
+        setupSearchBar()
 
         return fragmentOldBinding.root
+    }
+
+    private fun setupSearchBar() {
+        fragmentOldBinding.oldItemsSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                adapter.filter.filter(text)
+                return false
+            }
+
+        })
     }
 
     private fun setupRecyclerView() {
         viewModel.listItem.observe(viewLifecycleOwner, { items ->
             items?.let {
-                fragmentOldBinding.rvOldItems.adapter!!.notifyDataSetChanged()
+                adapter = OldItemsListAdapter(viewModel.listItem.value!! as ArrayList<OldItem>)
+                fragmentOldBinding.rvOldItems.adapter = adapter
                 fragmentOldBinding.shimmerFrameLayout.visibility = View.GONE
                 fragmentOldBinding.rvOldItems.visibility = View.VISIBLE
             }
@@ -58,31 +78,7 @@ class OldFragment : Fragment() {
                 LinearLayoutManager.VERTICAL
             )
         )
-        fragmentOldBinding.rvOldItems.adapter = object : RecyclerView.Adapter<OldItemHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OldItemHolder {
-                return OldItemHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(android.R.layout.simple_list_item_1, parent, false)
-                )
-            }
-
-            override fun onBindViewHolder(holder: OldItemHolder, position: Int) {
-                val oldItem = viewModel.listItem.value!![position]
-                holder.textField.text = oldItem.name
-                holder.textField.setOnClickListener {
-                    Toast.makeText(context, "Clicked ${oldItem.id}", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun getItemCount(): Int {
-                return viewModel.listItem.value!!.size
-            }
-
-        }
     }
 
-    class OldItemHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var textField: TextView = view.findViewById(android.R.id.text1) as TextView
-    }
 
 }
